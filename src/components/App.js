@@ -1,30 +1,32 @@
 import React from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import MovieList from './MovieList';
-import Movie from './Movie';
+import MovieList from "./MovieList";
+import Movie from "./Movie";
 
-import MovieHeader from './MovieHeader';
+import MovieHeader from "./MovieHeader";
 
-import AddMovieForm from './AddMovieForm';
-import FavoriteMovieList from './FavoriteMovieList';
+import movies from "../data";
 
-const App = props => {
+import AddMovieForm from "./AddMovieForm";
+import FavoriteMovieList from "./FavoriteMovieList";
+
+const App = (props) => {
   const displayFavorites = true;
 
   return (
     <div>
       <nav className="navbar navbar-dark bg-dark">
-        <span className="navbar-brand" >Redux Module Project</span>
+        <span className="navbar-brand">Redux Module Project</span>
       </nav>
 
       <div className="container">
-        <MovieHeader/>
-        <div className="row ">
-          {displayFavorites && <FavoriteMovieList/>}
-        
+        <MovieHeader />
+        <div className="row">
+          {displayFavorites && <FavoriteMovieList />}
+
           <Switch>
             <Route exact path="/movies/add">
               <AddMovieForm />
@@ -35,11 +37,11 @@ const App = props => {
             </Route>
 
             <Route path="/movies">
-              <MovieList/>
+              <MovieList />
             </Route>
 
             <Route path="/">
-              <Redirect to="/movies"/>
+              <Redirect to="/movies" />
             </Route>
           </Switch>
         </div>
@@ -48,4 +50,12 @@ const App = props => {
   );
 };
 
-export default App;
+const mapPropsToState = () => {
+  return {
+    movies: movies,
+    appTitle: "IMDB Movie Database",
+    // displayFavorites: false
+  };
+};
+
+export default connect(mapPropsToState)(App);
